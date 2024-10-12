@@ -21,13 +21,12 @@ export const createLibros = async (req, res) => {
 
 export const getBookById = async (req, res) => {
   try {
-    const Book = await librosModel.findById(req.params.id);
-    if (!Book) {
-      return res.status(404);
-      res.json(Book);
+    const book = await librosModel.findById(req.params.id);
+    if (!book) {
+      return res.status(404).json({ message: 'Libro no encontrado' });
     }
   } catch (error) {
-    res.status(400).json({ json: error.messages });
+    res.status(400).json({ error: error.message });
   }
 };
 
