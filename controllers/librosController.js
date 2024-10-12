@@ -38,6 +38,7 @@ export const updateBook = async (req, res) => {
       req.body,
       { new: true }
     );
+    res.send(update);
   } catch (error) {
     res.status(400).json({ json: error.messages });
   }
