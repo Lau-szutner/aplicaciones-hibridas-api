@@ -1,4 +1,5 @@
 import librosRoutes from './routes/librosRoutes.js';
+import authorRoutes from './routes/authorRoutes.js';
 import express from 'express';
 import mongoose from 'mongoose';
 import dotenv from 'dotenv';
@@ -20,6 +21,7 @@ app.use(bodyParser.json());
 app.use(express.json());
 app.use(express.static(path.join(__dirname, 'public')));
 app.use('/libros', librosRoutes);
+app.use('/author', authorRoutes);
 
 app.get('/', (req, res) => {
   res.sendFile(path.join(__dirname, 'public', 'index.html'));
