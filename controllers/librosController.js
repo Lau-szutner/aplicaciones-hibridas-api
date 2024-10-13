@@ -76,3 +76,19 @@ export const updateBookById = async (req, res) => {
     res.status(400).json({ error: error.message });
   }
 };
+
+export const getBookByTitle = async (req, res) => {
+  try {
+    const bookTitle = req.params.title;
+    console.log(bookTitle);
+    const book = await librosModel.findOne({ title: bookTitle });
+
+    if (!book) {
+      return res.status(404).json({ message: 'libro no encontrado' });
+    }
+
+    res.json(book);
+  } catch (error) {
+    res.status(500).json({ error: error.message });
+  }
+};
