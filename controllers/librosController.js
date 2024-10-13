@@ -2,7 +2,8 @@ import librosModel from '../models/librosModel.js';
 
 export const getLibros = async (req, res) => {
   try {
-    const libros = await librosModel.find();
+    // Aquí estamos usando .populate() para obtener los detalles del autor
+    const libros = await librosModel.find().populate('author');
     res.json(libros);
   } catch (error) {
     res.status(400).json({ json: error.message });

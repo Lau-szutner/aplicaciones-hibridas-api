@@ -7,9 +7,9 @@ const bookSchema = new mongoose.Schema({
     trim: true,
   },
   author: {
-    type: String,
+    type: mongoose.Schema.Types.ObjectId, // Referencia a un ObjectId
+    ref: 'Author', // El modelo al que hace referencia
     required: [true, 'El autor es obligatorio'],
-    trim: true,
   },
   yearPublished: {
     type: Number,
