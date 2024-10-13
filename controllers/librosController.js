@@ -33,18 +33,18 @@ export const getBookById = async (req, res) => {
   }
 };
 
-// export const updateBook = async (req, res) => {
-//   try {
-//     const update = await librosModel.findByIdAndUpdate(
-//       req.params.id,
-//       req.body,
-//       { new: true }
-//     );
-//     res.send(update);
-//   } catch (error) {
-//     res.status(400).json({ json: error.messages });
-//   }
-// };
+export const updateBook = async (req, res) => {
+  try {
+    const update = await librosModel.findByIdAndUpdate(
+      req.params.id,
+      req.body,
+      { new: true }
+    );
+    res.send(update);
+  } catch (error) {
+    res.status(400).json({ json: error.messages });
+  }
+};
 
 export const deleteBook = async (req, res) => {
   try {
