@@ -22,33 +22,41 @@ export const createLibros = async (req, res) => {
 
 export const getBookById = async (req, res) => {
   try {
-    const book = await librosModel.findById(req.params.id);
+    const book = await librosModel.findById(req.params.id).populate('author');
     if (!book) {
       return res.status(404).json({ message: 'Libro no encontrado' });
     }
+    res.json(book); // Asegúrate de enviar el libro encontrado
   } catch (error) {
+    console.error('Error al buscar el libro:', error); // Log para depuración
     res.status(400).json({ error: error.message });
   }
 };
 
-export const updateBook = async (req, res) => {
-  try {
-    const update = await librosModel.findByIdAndUpdate(
-      req.params.id,
-      req.body,
-      { new: true }
-    );
-    res.send(update);
-  } catch (error) {
-    res.status(400).json({ json: error.messages });
-  }
-};
+// export const updateBook = async (req, res) => {
+//   try {
+//     const update = await librosModel.findByIdAndUpdate(
+//       req.params.id,
+//       req.body,
+//       { new: true }
+//     );
+//     res.send(update);
+//   } catch (error) {
+//     res.status(400).json({ json: error.messages });
+//   }
+// };
 
 export const deleteBook = async (req, res) => {
   try {
     const deleted = await librosModel.findByIdAndDelete(req.params.id);
-    res.send(deleted);
+
+    if (!deleted) {
+      return res.status(404).json({ message: 'Libro no encontrado' });
+    }
+
+    res.send({ message: 'Libro eliminado correctamente', deleted });
   } catch (error) {
-    res.status(400).json({ json: error.messages });
+    console.error('Error al eliminar el libro:', error); // Agrega este log
+    res.status(400).json({ json: error.message }); // Cambié a error.message
   }
 };
