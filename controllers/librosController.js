@@ -60,3 +60,19 @@ export const deleteBook = async (req, res) => {
     res.status(400).json({ json: error.message }); // Cambié a error.message
   }
 };
+
+export const updateBookById = async (req, res) => {
+  try {
+    const updatedBook = await librosModel.findByIdAndUpdate(
+      req.params.id, // El ID del documento a actualizar
+      { $set: req.body }, // Los campos que deseas actualizar
+      { new: true } // Esta opción devuelve el documento actualizado
+    );
+    if (!updatedBook) {
+      return res.status(404).json({ message: 'Libro no encontrado' });
+    }
+    res.json(updatedBook);
+  } catch (error) {
+    res.status(400).json({ error: error.message });
+  }
+};
