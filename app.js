@@ -8,7 +8,6 @@ import bodyParser from 'body-parser';
 import librosRoutes from './routes/librosRoutes.js';
 import authorRoutes from './routes/authorRoutes.js';
 import authRoutes from './routes/authRoutes.js'; // Importa las rutas de autenticación
-
 import { protect } from './middleware/authMiddleware.js'; // Middleware de autenticación
 
 dotenv.config();
@@ -21,17 +20,25 @@ const __dirname = path.dirname(__filename);
 // Middlewares
 app.use(bodyParser.json());
 app.use(express.json());
-app.use(express.static(path.join(__dirname, 'public')));
+app.use(express.static(path.join(__dirname, 'public'))); // Archivos estáticos desde 'public'
 
 // Rutas
 app.use('/libros', protect, librosRoutes); // Rutas de libros
 app.use('/author', authorRoutes); // Rutas de autores
 app.use('/auth', authRoutes); // Rutas de autenticación
 
-
 // Página principal
 app.get('/', (req, res) => {
   res.sendFile(path.join(__dirname, 'public', 'index.html'));
+});
+
+// Rutas para las vistas
+app.get('/login', (req, res) => {
+  res.sendFile(path.join(__dirname, 'views', 'login.html'));
+});
+
+app.get('/register', (req, res) => {
+  res.sendFile(path.join(__dirname, 'views', 'register.html'));
 });
 
 // Conectar con MongoDB
