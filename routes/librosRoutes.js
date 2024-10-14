@@ -4,14 +4,15 @@ import {
   createLibros,
   getBookById,
   deleteBook,
-  //   getBookByAuthor,
   updateBookById,
   getBookByTitle,
+  getFilteredBooks,
 } from '../controllers/librosController.js';
 
 const router = express.Router();
 
 router.get('/', getLibros);
+router.get('/filter', getFilteredBooks);
 router.get('/:id', getBookById);
 router.post('/', createLibros);
 router.delete('/:id', deleteBook);

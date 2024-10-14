@@ -92,3 +92,37 @@ export const getBookByTitle = async (req, res) => {
     res.status(500).json({ error: error.message });
   }
 };
+
+// Controlador para filtrar libros por título, año y categoría
+export const getFilteredBooks = async (req, res) => {
+  try {
+    const { title, yearPublished, genre } = req.query; // Obtener parámetros de consulta
+
+    const filters = {};
+
+    // Agregar filtros según los parámetros proporcionados
+    if (title) {
+      const regex = new RegExp(title, 'i'); // Insensible a mayúsculas
+      filters.title = regex;
+    }
+
+    if (yearPublished) {
+      filters.yearPublished = yearPublished; // Filtrar por año
+    }
+
+    if (genre) {
+      filters.genre = genre; // Filtrar por género
+    }
+
+    // Buscar libros con los filtros aplicados
+    const books = await librosModel.find(filters).populate('author');
+
+    if (books.length === 0) {
+      return res.status(404).json({ message: 'Ningún libro encontrado' });
+    }
+
+    res.json(books); // Enviar libros que coinciden
+  } catch (error) {
+    res.status(500).json({ error: error.message });
+  }
+};
