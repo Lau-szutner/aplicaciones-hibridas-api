@@ -13,11 +13,11 @@ import { protect } from '../middleware/authMiddleware.js';
 const router = express.Router();
 
 router.get('/', protect, getLibros);
-router.get('/filter', getFilteredBooks);
-router.get('/:id', getBookById);
-router.post('/', createLibros);
-router.delete('/:id', deleteBook);
-router.put('/:id', updateBookById);
-router.get('/title/:title', getBookByTitle);
+router.get('/filter', protect, getFilteredBooks);
+router.get('/:id', protect, getBookById);
+router.post('/', protect, createLibros);
+router.delete('/:id', protect, deleteBook);
+router.put('/:id', protect, updateBookById);
+router.get('/title/:title', protect, getBookByTitle);
 
 export default router;

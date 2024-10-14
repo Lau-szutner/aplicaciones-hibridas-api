@@ -24,7 +24,7 @@ app.use(express.static(path.join(__dirname, 'public'))); // Archivos estáticos 
 
 // Rutas
 app.use('/libros', protect, librosRoutes); // Rutas de libros
-app.use('/author', authorRoutes); // Rutas de autores
+app.use('/author', protect, authorRoutes); // Rutas de autores
 app.use('/auth', authRoutes); // Rutas de autenticación
 
 // Página principal

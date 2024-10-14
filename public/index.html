@@ -4,30 +4,179 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>BookTags</title>
+    <title>Documentación de la API BookTags</title>
     <script src="https://cdn.tailwindcss.com"></script>
 </head>
 
 <body class="min-h-screen flex flex-col">
-    <header class="bg-gray-800 text-white p-4 flex justify-between items-center">
-        <h1 class="text-3xl font-bold underline">
-            BookTags || ApiRestfull
-        </h1>
-        <div class="space-x-4">
-            <button class="px-4 py-2 bg-indigo-600 text-white rounded hover:bg-indigo-700">
-                <a href="/login">Iniciar Sesión</a>
-            </button>
-            <button class="px-4 py-2 bg-green-600 text-white rounded hover:bg-green-700">
-                <a href="/register">Registrarse</a>
-            </button>
-            
-        </div>
+    <header class="bg-gray-800 text-white p-4">
+        <h1 class="text-3xl font-bold">Documentación de la API BookTags</h1>
     </header>
 
     <main class="flex-grow container mx-auto p-4">
-        <h2 class="text-xl font-semibold">BookTags</h2>
-        <p>Esta página es una ApiRestfull para trackear los libros que llevas leídos.</p>
-        <h3>Instrucciones de uso</h3>
+        <h2 class="text-xl font-semibold">Descripción</h2>
+        <p>Esta es una API RESTful para trackear los libros que has leído.</p>
+
+        <h3 class="mt-6 text-lg font-semibold">Endpoints disponibles</h3>
+
+        <h4 class="mt-4 text-md font-semibold">1. Registrar un Usuario</h4>
+        <p><strong>Método:</strong> POST</p>
+        <p><strong>Ruta:</strong> /auth/register</p>
+        <p><strong>Descripción:</strong> Permite registrar un nuevo usuario.</p>
+        <pre class="bg-gray-800 p-4 rounded-lg text-white">
+<code>
+async function registerUser(username, password) {
+    const response = await fetch('http://localhost:3000/auth/register', {
+        method: 'POST',
+        headers: {
+            'Content-Type': 'application/json',
+        },
+        body: JSON.stringify({ username, password }),
+    });
+    const data = await response.json();
+    console.log(data);
+}
+
+// Uso
+registerUser('nuevoUsuario', 'contraseñaSegura');
+</code>
+        </pre>
+
+        <h4 class="mt-4 text-md font-semibold">2. Iniciar Sesión</h4>
+        <p><strong>Método:</strong> POST</p>
+        <p><strong>Ruta:</strong> /auth/login</p>
+        <p><strong>Descripción:</strong> Inicia sesión y devuelve un token JWT.</p>
+        <pre class="bg-gray-800 p-4 rounded-lg text-white">
+<code>
+async function loginUser(username, password) {
+    const response = await fetch('http://localhost:3000/auth/login', {
+        method: 'POST',
+        headers: {
+            'Content-Type': 'application/json',
+        },
+        body: JSON.stringify({ username, password }),
+    });
+    const data = await response.json();
+    console.log(data);
+    return data.token; // Guarda el token para futuras peticiones
+}
+
+// Uso
+const token = await loginUser('usuarioExistente', 'contraseña');
+</code>
+        </pre>
+
+        <h4 class="mt-4 text-md font-semibold">3. Visualizar Todos los Libros</h4>
+        <p><strong>Método:</strong> GET</p>
+        <p><strong>Ruta:</strong> /libros</p>
+        <p><strong>Descripción:</strong> Obtiene una lista de todos los libros.</p>
+        <pre class="bg-gray-800 p-4 rounded-lg text-white">
+<code>
+async function getAllBooks(token) {
+    const response = await fetch('http://localhost:3000/libros', {
+        method: 'GET',
+        headers: {
+            'Authorization': `Bearer ${token}`, // Incluye el token en los encabezados
+        },
+    });
+    const data = await response.json();
+    console.log(data);
+}
+
+// Uso
+await getAllBooks(token);
+</code>
+        </pre>
+
+        <h4 class="mt-4 text-md font-semibold">4. Obtener un Libro Específico</h4>
+        <p><strong>Método:</strong> GET</p>
+        <p><strong>Ruta:</strong> /libros/:id</p>
+        <p><strong>Descripción:</strong> Obtiene un libro específico por su ID.</p>
+        <pre class="bg-gray-800 p-4 rounded-lg text-white">
+<code>
+async function getBookById(token, id) {
+    const response = await fetch(`http://localhost:3000/libros/${id}`, {
+        method: 'GET',
+        headers: {
+            'Authorization': `Bearer ${token}`,
+        },
+    });
+    const data = await response.json();
+    console.log(data);
+}
+
+// Uso
+await getBookById(token, '123'); // Reemplaza '123' con el ID real del libro
+</code>
+        </pre>
+
+        <h4 class="mt-4 text-md font-semibold">5. Actualizar un Libro</h4>
+        <p><strong>Método:</strong> PUT</p>
+        <p><strong>Ruta:</strong> /libros/:id</p>
+        <p><strong>Descripción:</strong> Actualiza la información de un libro existente.</p>
+        <pre class="bg-gray-800 p-4 rounded-lg text-white">
+<code>
+async function updateBook(token, id, updatedData) {
+    const response = await fetch(`http://localhost:3000/libros/${id}`, {
+        method: 'PUT',
+        headers: {
+            'Content-Type': 'application/json',
+            'Authorization': `Bearer ${token}`,
+        },
+        body: JSON.stringify(updatedData),
+    });
+    const data = await response.json();
+    console.log(data);
+}
+
+// Uso
+await updateBook(token, '123', { title: 'Nuevo Título', author: 'Nuevo Autor' });
+</code>
+        </pre>
+
+        <h4 class="mt-4 text-md font-semibold">6. Eliminar un Libro</h4>
+        <p><strong>Método:</strong> DELETE</p>
+        <p><strong>Ruta:</strong> /libros/:id</p>
+        <p><strong>Descripción:</strong> Elimina un libro por su ID.</p>
+        <pre class="bg-gray-800 p-4 rounded-lg text-white">
+<code>
+async function deleteBook(token, id) {
+    const response = await fetch(`http://localhost:3000/libros/${id}`, {
+        method: 'DELETE',
+        headers: {
+            'Authorization': `Bearer ${token}`,
+        },
+    });
+    const data = await response.json();
+    console.log(data);
+}
+
+// Uso
+await deleteBook(token, '123'); // Reemplaza '123' con el ID real del libro
+</code>
+        </pre>
+
+        <h4 class="mt-4 text-md font-semibold">7. Filtrado y Búsqueda</h4>
+        <p><strong>Método:</strong> GET</p>
+        <p><strong>Ruta:</strong> /libros?search={nombre}</p>
+        <p><strong>Descripción:</strong> Filtra los libros por nombre.</p>
+        <pre class="bg-gray-800 p-4 rounded-lg text-white">
+<code>
+async function filterBooks(token, searchTerm) {
+    const response = await fetch(`http://localhost:3000/libros?search=${searchTerm}`, {
+        method: 'GET',
+        headers: {
+            'Authorization': `Bearer ${token}`,
+        },
+    });
+    const data = await response.json();
+    console.log(data);
+}
+
+// Uso
+await filterBooks(token, 'Harry Potter');
+</code>
+        </pre>
     </main>
 
     <footer class="bg-zinc-600 p-4 text-white">
@@ -44,8 +193,6 @@
             <span class="font-bold">Comisión:</span> DWN4AV
         </div>
     </footer>
-
-    <script src="../app.js"></script>
 </body>
 
 </html>
