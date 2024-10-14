@@ -8,10 +8,11 @@ import {
   getBookByTitle,
   getFilteredBooks,
 } from '../controllers/librosController.js';
+import { protect } from '../middleware/authMiddleware.js';
 
 const router = express.Router();
 
-router.get('/', getLibros);
+router.get('/', protect, getLibros);
 router.get('/filter', getFilteredBooks);
 router.get('/:id', getBookById);
 router.post('/', createLibros);
