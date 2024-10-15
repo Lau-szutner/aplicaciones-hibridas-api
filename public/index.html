@@ -211,6 +211,24 @@ Headers:
 Authorization: Bearer {token}
 </code>
         </pre>
+
+        <h4 class="mt-4 text-md font-semibold">12. Obtener Libros Ordenados</h4>
+<p><strong>Método:</strong> GET</p>
+<p><strong>Ruta:</strong> /libros/sort</p>
+<p><strong>Descripción:</strong> Obtiene una lista de libros ordenados por el campo especificado en los parámetros de consulta.</p>
+<pre class="bg-gray-800 p-4 rounded-lg text-white">
+<code>
+GET http://localhost:3000/libros/sort?sort={campo}&order={asc|desc}
+
+Headers:
+Authorization: Bearer {token}
+
+Parámetros de Consulta:
+- sort: Campo por el cual ordenar (por defecto: title). Ejemplo: title, yearPublished, genre, pages.
+- order: Dirección del orden (por defecto: asc). Valores posibles: asc o desc.
+</code>
+</pre>
+
     </main>
 
     <footer class="bg-zinc-600 p-4 text-white">

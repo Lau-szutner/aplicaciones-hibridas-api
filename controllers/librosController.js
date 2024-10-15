@@ -126,3 +126,17 @@ export const getFilteredBooks = async (req, res) => {
     res.status(500).json({ error: error.message });
   }
 };
+
+
+
+export const getSortBooks = async (req, res) => {
+  try {
+    const sortField = req.query.sort || 'title';
+    const sortOrder = req.query.order === 'desc' ? -1 : 1;
+    const libros = await librosModel.find().sort({ [sortField]: sortOrder }).populate('author');
+
+    res.json(libros); 
+  } catch (error) {
+    res.status(500).json({ message: 'Error al obtener los libros', error: error.message });
+  }
+};
