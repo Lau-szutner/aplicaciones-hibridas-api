@@ -60,11 +60,11 @@ Body (JSON):
 
         <h4 class="mt-4 text-md font-semibold">3. Crear un Autor</h4>
         <p><strong>Método:</strong> POST</p>
-        <p><strong>Ruta:</strong> /authors</p>
+        <p><strong>Ruta:</strong> /author</p>
         <p><strong>Descripción:</strong> Crea un nuevo autor.</p>
         <pre class="bg-gray-800 p-4 rounded-lg text-white">
 <code>
-POST http://localhost:3000/authors
+POST http://localhost:3000/author/ 
 
 Headers:
 Authorization: Bearer {token}
@@ -83,10 +83,10 @@ Body (JSON):
         <h4 class="mt-4 text-md font-semibold">4. Obtener Todos los Autores</h4>
         <p><strong>Método:</strong> GET</p>
         <p><strong>Ruta:</strong> /authors</p>
-        <p><strong>Descripción:</strong> Obtiene una lista de todos los autores.</p>
+        <p><strong>Descripción:</strong> Obtiene una lista de todos los autores y sus ids, los cuales deben ser usados en la creación de libros</p>
         <pre class="bg-gray-800 p-4 rounded-lg text-white">
 <code>
-GET http://localhost:3000/authors
+GET http://localhost:3000/author/
 
 Headers:
 Authorization: Bearer {token}
@@ -109,13 +109,13 @@ Authorization: Bearer {token}
 </code>
         </pre>
 
-        <h4 class="mt-4 text-md font-semibold">6. Filtrar Libros por Nombre</h4>
+        <h4 class="mt-4 text-md font-semibold">6. Filtrar Libros</h4>
         <p><strong>Método:</strong> GET</p>
         <p><strong>Ruta:</strong> /libros/filter</p>
-        <p><strong>Descripción:</strong> Filtra los libros por nombre.</p>
+        <p><strong>Descripción:</strong> Filtra los libros por (title, yearPublished, genre), devuelve los libros que coincidan con estos parametros</p>
         <pre class="bg-gray-800 p-4 rounded-lg text-white">
 <code>
-GET http://localhost:3000/libros/filter?search=nombre
+GET http://localhost:3000/libros/filter?param=value
 
 Headers:
 Authorization: Bearer {token}
@@ -128,7 +128,7 @@ Authorization: Bearer {token}
         <p><strong>Descripción:</strong> Obtiene un libro por su ID.</p>
         <pre class="bg-gray-800 p-4 rounded-lg text-white">
 <code>
-GET http://localhost:3000/libros/{id}
+GET http://localhost:3000/libros/:id
 
 Headers:
 Authorization: Bearer {token}
@@ -150,7 +150,7 @@ Content-Type: application/json
 Body (JSON):
 {
     "title": String,
-    "author": String,
+    "author": (Stephen king ID),
     "yearPublished": Number,
     "genre": {
         'Ficción',
@@ -171,7 +171,7 @@ Body (JSON):
         <p><strong>Descripción:</strong> Actualiza la información de un libro existente.</p>
         <pre class="bg-gray-800 p-4 rounded-lg text-white">
 <code>
-PUT http://localhost:3000/libros/{id}
+PUT http://localhost:3000/libros/:id
 
 Headers:
 Authorization: Bearer {token}
